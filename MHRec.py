@@ -106,7 +106,6 @@ class Denoise(nn.Module):
             layer.weight.data.normal_(0.0, std)
             layer.bias.data.normal_(0.0, 0.001)
 
-        # 初始化时间嵌入层的权重
         size = self.emb_layer.weight.size()
         std = np.sqrt(2.0 / (size[0] + size[1]))
         self.emb_layer.weight.data.normal_(0.0, std)
