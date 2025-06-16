@@ -68,7 +68,6 @@ if __name__ == '__main__':
     item_graph_dict = {}
     edge_list_i = []
     edge_list_j = []
-
     for i in range(num_user):
         user_num[i] = len(torch.nonzero(user_graph[i]))
         print("this is ", i, "num", user_num[i])

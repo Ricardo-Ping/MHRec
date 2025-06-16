@@ -57,20 +57,17 @@ if __name__ == '__main__':
 
     print(f'uu_topk: {args.uu_topk}, ii_topk: {args.ii_topk}')
 
-    # ========================(U-I)============================
     adjusted_item_ids = train_data[:, 1] - num_user
     user_item_graph = sp.coo_matrix((np.ones(len(train_data)),
                                      (train_data[:, 0], adjusted_item_ids)),
                                     shape=(num_user, num_item), dtype=np.float32)
 
-    # ========================(U-U) =============================
     user_graph_dict = np.load(os.path.join(dir_str, 'user_graph_dict.npy'),
                               allow_pickle=True).item()
 
     # [num_user, user_topk]
     user_user_k_graph = topk_sample(args.uu_topk, user_graph_dict, num_user)
 
-    # ========================(I-I) =============================
     visual_adj_file = os.path.join(dir_str, 'ii_visual_{}.pt'.format(args.ii_topk))
     textual_adj_file = os.path.join(dir_str, 'ii_textual_{}.pt'.format(args.ii_topk))
 
@@ -95,6 +92,7 @@ if __name__ == '__main__':
     textual_file_path = os.path.join(dir_str, textual_file_name)
 
     if os.path.exists(visual_file_path) and os.path.exists(textual_file_path):
+
         hyperedges_visual = np.load(visual_file_path, allow_pickle=True).tolist()
         hyperedges_textual = np.load(textual_file_path, allow_pickle=True).tolist()
     else:
@@ -140,5 +138,4 @@ if __name__ == '__main__':
 
         np.save(visual_file_path, hyperedges_visual_array, allow_pickle=True)
         np.save(textual_file_path, hyperedges_textual_array, allow_pickle=True)
-
 
